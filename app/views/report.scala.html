@@ -1,0 +1,88 @@
+@(content: String)
+
+@import helper._
+@message = @{SiteController.notifyMessage}
+@error = @{SiteController.notifyError}
+@logs = @{SiteController.getReport()}
+@main {
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-file-text-o"></i> Client Report
+            <small>Sentinel report of works </small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><i class="fa fa-file-text-o"></i> Client Report</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Inform message -->
+        @if(message != null) {
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="callout callout-info">
+                        <h4><i class="fa fa-info"></i> Info:</h4>
+                        <p>@message</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Inform error -->
+        @if(error != null) {
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="callout callout-warning">
+                        <h4><i class="fa fa-warning"></i> Warning:</h4>
+                        <p>@error</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @SiteController.clearNotifyMessage()
+
+        <div class="row">
+            <!-- running task table -->
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">Client Reports</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-condensed" style="overflow: auto">
+                            <tr>
+                                <th>Time</th>
+                                <th>Name</th>
+                                <th>IP</th>
+                                <th>Page View</th>
+                                <th>Pop-up Load</th>
+                                <th>Clicks Ads</th>
+                            </tr>
+                            @logs.map{ log =>
+                            <tr>
+                                <td>@log.get("time")</td>
+                                <td>@log.get("sentinelName")</td>
+                                <td>@log.get("sentinelIp")</td>
+                                <td>@log.get("pageLoad")</td>
+                                <td>@log.get("popupLoad")</td>
+                                <td>@log.get("clickAds")</td>
+                            </tr>
+                            }
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <!-- /.content -->
+</div>
+}

@@ -1,0 +1,90 @@
+@(page: String)
+
+@import helper._
+
+@sentinelList = @{SiteController.getRunningList(java.lang.Integer.parseInt(page) - 1)}
+@currentFarm = @{SentinelManager.INSTANCE.getCurrentFarmRegion()}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="box box-info">
+        <div class="box-header">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <h3 class="box-title">
+                    Sentinels List. Total sentinels today: @SentinelManager.INSTANCE.getDailySentinelCount()
+                    @if(currentFarm != null) {
+                    <p><small>
+                        Current farm: @currentFarm.getRegionName().
+                        Cycle: @currentFarm.getCurrentCycle() / @SentinelManager.INSTANCE.getDailyLimitFarmCycle().
+                        Sentinels: @sentinelList.size() / @SentinelManager.INSTANCE.getSentinelCount() / @SentinelManager.INSTANCE.getLimitSentinelPerRegion().
+                        Last update time: @controllers.common.Helper.sinceMs(currentFarm.getLastUpdateTime()).</small></p>
+                    }
+                </h3>
+                <!--<a href="/request?action=create-sentinel">-->
+                    <!--<button type="button" name="action" value="create" class="btn btn-success" style="margin: 10px;"><i class="fa fa-plus"></i> Create Sentinel</button>-->
+                <!--</a>-->
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="box-tools">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="/request?action=view&page=@(java.lang.Integer.parseInt(page) - 1)&src=dashboard">Previous</a></li>
+                        @for(i <- 1 to 6) {
+                        @if(page == "" + i) {
+                        <li><a href="/request?action=view&page=@i&src=dashboard">[@i]</a></li>
+                        } else {
+                        <li><a href="/request?action=view&page=@i&src=dashboard">@i</a></li>
+                        }
+                        }
+                        <li><a href="/request?action=view&page=@(java.lang.Integer.parseInt(page) + 1)&src=dashboard">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+
+        <div class="box-body table-responsive no-padding">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <table class="table table-hover">
+                    <!--<tr>-->
+                    <!--<th style="width: 70%">Sentinel</th>-->
+                    <!--</tr>-->
+                    @if(sentinelList != null) {
+                    @for(sentinel <- sentinelList) {
+                    @if(sentinel.getId() % 3 == 0) {
+                    @sentinel_info(sentinel)
+                    }
+                    }
+                    }
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <table class="table table-hover">
+                    <!--<tr>-->
+                    <!--<th style="width: 70%">Sentinel</th>-->
+                    <!--</tr>-->
+                    @if(sentinelList != null) {
+                    @for(sentinel <- sentinelList) {
+                    @if(sentinel.getId() % 3 == 1) {
+                    @sentinel_info(sentinel)
+                    }
+                    }
+                    }
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <table class="table table-hover">
+                    <!--<tr>-->
+                    <!--<th style="width: 70%">Sentinel</th>-->
+                    <!--</tr>-->
+                    @if(sentinelList != null) {
+                    @for(sentinel <- sentinelList) {
+                    @if(sentinel.getId() % 3 == 2) {
+                    @sentinel_info(sentinel)
+                    }
+                    }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>

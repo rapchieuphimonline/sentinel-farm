@@ -1,0 +1,97 @@
+@(content: String)
+
+@import helper._
+@message = @{SiteController.notifyMessage}
+@error = @{SiteController.notifyError}
+@configs = @{SiteController.getConfig()}
+@main {
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-gear"></i> Settings
+            <small>Tool configurations...</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><i class="fa fa-gear"></i> Settings</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Inform message -->
+        @if(message != null) {
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="callout callout-info">
+                    <h4><i class="fa fa-info"></i> Info:</h4>
+                    <p>@message</p>
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Inform error -->
+        @if(error != null) {
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="callout callout-warning">
+                    <h4><i class="fa fa-warning"></i> Warning:</h4>
+                    <p>@error</p>
+                </div>
+            </div>
+        </div>
+        }
+
+        @SiteController.clearNotifyMessage()
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-info">
+                    <div class="box-header">
+                        <h3 class="box-title">Farm Configuration</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        @form(routes.ControlCenter.goRequest()) {
+                        <div class="row">
+                            <div class="col-md-5 col-sm-12 col-xs-12">
+                                <input type="text" class="form-control" placeholder="Key" name="key">
+                                <br>
+                            </div>
+                            <div class="col-md-5 col-sm-12 col-xs-12">
+                                <input type="text" class="form-control" placeholder="Value" name="value">
+                                <br>
+                            </div>
+                            <div class="col-md-2 col-sm-12 col-xs-12">
+                                <button type="submit" class="btn btn-block btn-primary"><i class="fa fa-gear"></i> Set</button>
+                                <br>
+                            </div>
+                            <input type="hidden" name="action" value="set-config">
+                        </div>
+                        }
+
+                        <table class="table table-condensed">
+                            <tr>
+                                <th style="width: 30%">Key</th>
+                                <th style="width: 70%">Value</th>
+                            </tr>
+                            @if(configs != null) {
+                            @configs.map{ case(k,v) =>
+                            <tr>
+                                <td>@k</td>
+                                <td>@v</td>
+                            </tr>
+                            }
+                            }
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+}

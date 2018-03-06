@@ -1,0 +1,30 @@
+@(content: String)
+
+@import helper._
+
+@logs = @{SiteController.getLogs()}
+
+<!-- running task table -->
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="box box-info">
+        <div class="box-header">
+            <h3 class="box-title">Logs</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table class="table table-condensed" style="overflow: auto">
+                <tr>
+                    <th>Time</th>
+                    <th>Message</th>
+                </tr>
+                @logs.map{ log =>
+                <tr>
+                    <td class="width: 15%; text-@log.get("severity")">@log.get("time")</td>
+                    <td class="width: 85%; text-@log.get("severity")">@log.get("message")</td>
+                </tr>
+                }
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>

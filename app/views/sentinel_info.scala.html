@@ -1,0 +1,74 @@
+@(sentinel: controllers.SentinelProfile)
+
+@import helper._
+
+<tr>
+    <td>
+        <p>
+            <strong>
+                <i class="fa fa-bug"></i>
+                @sentinel.getMachineName()
+                [@sentinel.getIp()] <span class="badge bg-green">@controllers.Compute.getIpUseCount(sentinel.getIp)</span>
+            </strong>
+        </p>
+        <p>
+            <small>
+                <i>
+                    <i class="fa fa-clock-o"></i>
+                    Created: @controllers.Compute.since(sentinel)
+                </i>
+            </small>
+
+        </p>
+        <p>
+            <small>
+                <i>
+                    <i class="fa fa-globe"></i>
+                    Region: @sentinel.getZoneName() - @sentinel.getIp()
+                </i>
+            </small>
+        </p>
+        <p>
+            <small>
+                <i>
+                    <i class="fa fa-heartbeat"></i>
+                    Heartbeat:
+                    @if(controllers.Compute.heartbeat(sentinel)) {
+                    <span class="label label-success">HEALTHY</span>
+                    } else {
+                    <span class="label label-danger">UNHEALTHY</span>
+                    }
+                </i>
+            </small>
+
+        </p>
+        <p>
+            <small>
+                <i>
+                    <i class="fa fa-play-circle"></i>
+                    Working status:
+                    @if(sentinel.isWorking()) {
+                    <span class="label label-success">WORKING</span>
+                    } else {
+                    <span class="label label-danger">STOP</span>
+                    }
+                </i>
+            </small>
+        </p>
+        <p>
+            <small>
+                <i>
+                    <i class="fa fa-gears"></i>
+                    Control:
+                    <a href="/request?action=sentinel-detail&sentinel-name=@sentinel.getMachineName()&src=dashboard">
+                        <button type="button" name="action" value="delete" class="btn btn-info btn-xs"><i class="fa fa-bug"></i> View</button>
+                    </a>
+                    <a href="/request?action=delete-sentinel&sentinel-name=@sentinel.getMachineName()&src=dashboard">
+                        <button type="button" name="action" value="delete" class="btn btn-info btn-xs"><i class="fa fa-trash-o"></i> Delete</button>
+                    </a>
+                </i>
+            </small>
+
+        </p>
+    </td>
+</tr>
