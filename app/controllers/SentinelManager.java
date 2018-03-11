@@ -106,19 +106,19 @@ public enum SentinelManager {
         }, 10, 30, TimeUnit.SECONDS);
 
         /* remove idle sentinel */
-        scheduler.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                if (SiteController.getConfig().get("SCHEDULE_TASK_DELETE_SENTINEL_STATUS").equalsIgnoreCase("play")) {
-                    try {
-                        cleanOldFarm();
-                        removeIdleSentinel();
-                    } catch (Exception e) {
-                        LogHelper.LogException("scheduledTask", e);
-                    }
-                }
-            }
-        }, 10, 60, TimeUnit.SECONDS);
+        // scheduler.scheduleAtFixedRate(new Runnable() {
+            // @Override
+            // public void run() {
+                // if (SiteController.getConfig().get("SCHEDULE_TASK_DELETE_SENTINEL_STATUS").equalsIgnoreCase("play")) {
+                    // try {
+                        // cleanOldFarm();
+                        // removeIdleSentinel();
+                    // } catch (Exception e) {
+                        // LogHelper.LogException("scheduledTask", e);
+                    // }
+                // }
+            // }
+        // }, 10, 60, TimeUnit.SECONDS);
     }
 
     private Map<String, List<SentinelProfile>> loadSentinelList() {
