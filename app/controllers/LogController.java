@@ -11,12 +11,12 @@ import play.mvc.Result;
  */
 public class LogController extends Controller {
     public static Result goLogEndpoint() {
-        LogHelper.Log("on goLogEndpoint... request := " + request());
+        // LogHelper.Log("on goLogEndpoint... request := " + request());
         return ok();
     }
 
     public static Result doLogEndpoint() {
-        LogHelper.Log("on doLogEndpoint... request := " + request());
+        // LogHelper.Log("on doLogEndpoint... request := " + request());
         JsonNode jsonNode = request().body().asJson();
         String message = jsonNode.toString();
         if (!Strings.isNullOrEmpty(message)) {
